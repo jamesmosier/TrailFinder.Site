@@ -180,30 +180,30 @@ module.exports = function(grunt) {
       }
     },
 
-    // compile LESS files into CSS and store them in temp directories
-    less: {
-      options: {
-        paths: [
-          // add any additional paths to LESS components here
-          "<%= bowerDir %>/lesshat",
-          "<%= srcDir %>/css/config"
-        ]
-      },
+    // compile sass files into CSS and store them in temp directories
+    sass: {
+      // options: {
+      //   paths: [
+      //     // add any additional paths to sass components here
+      //     //"<%= bowerDir %>/lesshat",
+      //     "<%= srcDir %>/css/config/*.scss"
+      //   ]
+      // },
       development: {
         files: {
           // put app.css directly into the build directory for development
-          "<%= appDir %>/css/app.css": [
-            "<%= srcDir %>/css/common/*.less",
-            "<%= srcDir %>/css/*.less"
-          ]
+            "<%= appDir %>/css/app.css": [
+              //"<%= srcDir %>/css/common/*.scss",
+              "<%= srcDir %>/css/*.scss"
+            ]
         }
       },
       production: {
         files: {
           // put app.css in tmp dir in production, so we can run cssmin on it after
           "<%= tmpDir %>/css/app.css": [
-            "<%= srcDir %>/css/common/*.less",
-            "<%= srcDir %>/css/*.less"
+            //"<%= srcDir %>/css/common/*.scss",
+            "<%= srcDir %>/css/*.scss"
           ]
         }
       }
@@ -281,14 +281,14 @@ module.exports = function(grunt) {
           'copy:tmp_to_build'
         ]
       },
-      less: {
+      sass: {
         files: [
-          '<%= srcDir %>/css/*.less',
-          '<%= srcDir %>/css/**/*.less'
+          '<%= srcDir %>/css/*.scss',
+          '<%= srcDir %>/css/**/*.scss'
         ],
         tasks: [
           'clean:css', 'concat:vendor', 'copy:vendor',
-          'less:development'
+          'sass:development'
         ]
       },
       img: {
@@ -360,7 +360,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
@@ -421,8 +420,8 @@ module.exports = function(grunt) {
     // clean up directories
     grunt.task.run('clean:' + env);
 
-    // build all less files based on environment
-    grunt.task.run('less:' + env);
+    // build all sass files based on environment
+    grunt.task.run('sass:' + env);
 
     // concat angular files
     grunt.task.run('concat:angular');
