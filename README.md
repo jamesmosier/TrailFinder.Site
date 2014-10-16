@@ -2,6 +2,8 @@
 
 <hr>
 
+Original: https://github.com/calvinl/ng-phonegap
+
 # Angular PhoneGap
 
 An opinionated workflow for building kick-ass mobile apps using

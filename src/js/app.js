@@ -1,11 +1,11 @@
 // some globals.
-var _APP_         = 'yourappname'
+var _APP_         = 'tFinder'
   , _CONTROLLERS_ = _APP_ + '.controllers'
   , _DIRECTIVES_  = _APP_ + '.directives'
   , _FILTERS_     = _APP_ + '.filters'
   , _MODULES_     = _APP_ + '.modules'
   , _SERVICES_    = _APP_ + '.services';
-
+  
 // top-level module
 angular.module(_APP_, [
   // Your application's namespaced modules
@@ -16,8 +16,8 @@ angular.module(_APP_, [
   _DIRECTIVES_,
   _FILTERS_,
   _MODULES_,
-  _SERVICES_,
-
+  //_SERVICES_,
+  'tFinder.mapSvc'
 
   // add additional modules here, such as ngAnimate
   // ngTouch, ngResource, or your own custom modules.

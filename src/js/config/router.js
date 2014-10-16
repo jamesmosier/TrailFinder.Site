@@ -14,6 +14,10 @@ angular.module(_APP_).config([
         templateUrl: 'html/partials/home/index.html',
         controller: 'HomeController'
       })
+      .when('/map', {
+        templateUrl: 'html/partials/map/index.html',
+        controller: 'MapController'
+      })
       .otherwise({ redirectTo: '/' });
 
   }
