@@ -17,7 +17,8 @@ angular.module(_APP_, [
   _FILTERS_,
   _MODULES_,
   //_SERVICES_,
-  'tFinder.mapSvc'
+  'tFinder.mapSvc',
+  'tFinder.mapCtrl',
 
   // add additional modules here, such as ngAnimate
   // ngTouch, ngResource, or your own custom modules.

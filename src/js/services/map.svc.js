@@ -1,23 +1,12 @@
 'use strict';
 
 angular.module('tFinder.mapSvc')
-  .factory('MapService', function($http, $q, config, Session) {
+  .factory('MapService', function($http) {
     var mapService = {};
 
-    eventDetailsService.get = function(eventId) {
-
-      var data = {
-        schoolId: Session.getChosenSchool().Id
-      };
-
-      var headers = {
-        headers: {
-          'x-htm-authtoken':Session.getAuthToken()
-        }
-      };
-
-      return $http.post(config.baseUrl + config.eventPath + '/' + eventId + '/details', data, headers);
+    mapService.get = function(eventId) {
+      return $http.post('https://tf-svc.azurewebsites.net/trails');
     };
 
-    return eventDetailsService;
+    return mapService;
   });

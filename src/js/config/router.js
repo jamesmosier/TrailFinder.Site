@@ -16,7 +16,12 @@ angular.module(_APP_).config([
       })
       .when('/map', {
         templateUrl: 'html/partials/map/index.html',
-        controller: 'MapController'
+        controller: 'MapController',
+        resolve: {
+          trails: function(MapService) {
+            return MapService.get();
+          }
+        }
       })
       .otherwise({ redirectTo: '/' });
 
