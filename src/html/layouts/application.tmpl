@@ -28,9 +28,37 @@
 </head>
 <body>
 
-  <div id="container" class="container">
-    <div id="main" ng-view></div>
-  </div>
+  <header class="bar bar-nav">
+     <button class="btn btn-link btn-nav pull-left">
+        <span class="icon icon-left-nav"></span>
+        Back
+     </button>
+     <a class="icon fa location-arrow pull-right"></a>
+     <h1 class="title" ng-bind="title"></h1>
+  </header>
+
+
+  <div class="content" id="main" ng-view></div>
+
+
+  <nav class="bar bar-tab">
+    <a class="tab-item active" href="#/home">
+      <span class="icon icon-home"></span>
+      <span class="tab-label">Home</span>
+    </a>
+    <a class="tab-item" href="#/fav">
+      <span class="icon icon-star-filled"></span>
+      <span class="tab-label">Favorites</span>
+    </a>
+    <a class="tab-item" href="#">
+      <span class="icon icon-search"></span>
+      <span class="tab-label">Search</span>
+    </a>
+    <a class="tab-item" href="#">
+      <span class="icon icon-gear"></span>
+      <span class="tab-label">Settings</span>
+    </a>
+  </nav>
 
   <script type="text/javascript">
     pg.initialize();

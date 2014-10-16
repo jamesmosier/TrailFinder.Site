@@ -6,7 +6,7 @@
 
 module.exports = function(grunt) {
 
-  var _APP_NAME_ = "CHANGE ME IN Gruntfile.js";
+  var _APP_NAME_ = "TrailFinder";
 
   // initial grunt configuration
   grunt.initConfig({
@@ -21,6 +21,7 @@ module.exports = function(grunt) {
     connect: {
     	server: {
     		options: {
+          hostname: 'localhost',
     			port: 9001,
     			base: '<%= appDir %>',
     			open: true,
@@ -33,9 +34,9 @@ module.exports = function(grunt) {
         vendor: [
 
           // Add additional Bower components here
-          '<%= bowerDir %>/bootstrap/dist/css/bootstrap.css',
-          '<%= bowerDir %>/font-awesome/css/font-awesome.css'
-
+          // '<%= bowerDir %>/bootstrap/dist/css/bootstrap.css',
+          // '<%= bowerDir %>/font-awesome/css/font-awesome.css',
+          'src/lib/css/ratchet.css'
         ],
         // shouldn't need to touch this
         src: [
@@ -48,7 +49,8 @@ module.exports = function(grunt) {
           // add any Bower components here.
           '<%= bowerDir %>/angular/angular.js',
           '<%= bowerDir %>/angular-route/angular-route.js',
-          '<%= bowerDir %>/angular-touch/angular-touch.js'
+          '<%= bowerDir %>/angular-touch/angular-touch.js',
+          'src/lib/js/ratchet.min.js'
         ],
         // shouldn't need to touch this.
         src: [
@@ -160,7 +162,7 @@ module.exports = function(grunt) {
       },
       fonts: {
         files: [
-          { expand: true, cwd: '<%= bowerDir %>/font-awesome/fonts/', src: ['**'], dest: '<%= appDir %>/fonts/' }
+          { expand: true, cwd: '<%= srcDir %>/lib/fonts/', src: ['**'], dest: '<%= appDir %>/fonts/' }
         ]
       },
       tmp_to_build: {
@@ -296,7 +298,7 @@ module.exports = function(grunt) {
         tasks: ['clean:img', 'copy:img']
       },
       fonts: {
-        files: ['<%= srcDir %>/fonts/**'],
+        files: ['<%= srcDir %>/lib/fonts/**'],
         tasks: ['clean:fonts', 'copy:fonts']
       },
       partials: {
