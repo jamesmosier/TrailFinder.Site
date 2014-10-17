@@ -53,3 +53,5 @@ angular.module(_DIRECTIVES_, []);
 angular.module(_FILTERS_, []);
 angular.module(_MODULES_, []);
 angular.module(_SERVICES_, []);
+angular.module('tFinder.mapSvc', []);
+angular.module('tFinder.mapCtrl', []);
