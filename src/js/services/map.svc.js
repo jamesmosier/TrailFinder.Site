@@ -4,8 +4,8 @@ angular.module('tFinder.mapSvc')
   .factory('MapService', function($http) {
     var mapService = {};
 
-    mapService.get = function(eventId) {
-      return $http.post('https://tf-svc.azurewebsites.net/trails');
+    mapService.get = function() {
+      return $http.get('https://tf-svc.azurewebsites.net/trails?format=json');
     };
 
     return mapService;
