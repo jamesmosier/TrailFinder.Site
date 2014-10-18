@@ -9,7 +9,7 @@
         }, options);
 
         var trailfinder_map;
-
+        
         function trailfinder_initialize() {
             var mapOptions = {
                 zoom: 9,
@@ -18,22 +18,23 @@
             trailfinder_map = new google.maps.Map(document.getElementById('map'), mapOptions);
             // Try HTML5 geolocation
             if (navigator.geolocation) {
+                
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var lat = position.coords.latitude,
                         lng = position.coords.longitude,
                         //lat=41.081445,lng= -81.519005,
                         pos = new google.maps.LatLng(lat, lng),
                         //query from FusionTables for the map
-                        map_query = {
-                            select: 'Coordinates',
-                            from: '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc',
-                            limit: settings.queryLimit,
-                            orderBy: 'ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))'
-                        },
-                        ftLayer = new google.maps.FusionTablesLayer({
-                            map: trailfinder_map,
-                            query: map_query
-                        }),
+                        // map_query = {
+                        //     select: 'Coordinates',
+                        //     from: '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc',
+                        //     limit: settings.queryLimit,
+                        //     orderBy: 'ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))'
+                        // },
+                        // ftLayer = new google.maps.FusionTablesLayer({
+                        //     map: trailfinder_map,
+                        //     query: map_query
+                        // }),
                         geolocMarker = new google.maps.Marker({
                             map: trailfinder_map,
                             position: pos,
@@ -48,13 +49,13 @@
                     });
                     trailfinder_map.setCenter(pos);
                     //query for the table                                    
-                    var listQuery = "SELECT Name, Coordinates FROM " + '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc' + ' ORDER BY ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))' + ' LIMIT ' + settings.queryLimit;
-                    var encodedQuery = encodeURIComponent(listQuery);
-                    // Construct the URL
-                    var url = ['https://www.googleapis.com/fusiontables/v1/query'];
-                    url.push('?sql=' + encodedQuery);
-                    url.push('&key=AIzaSyAJ_2Gtxlr4jeFuBup_jyRa5taZGk20JLs');
-                    url.push('&callback=?');
+                    // var listQuery = "SELECT Name, Coordinates FROM " + '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc' + ' ORDER BY ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))' + ' LIMIT ' + settings.queryLimit;
+                    // var encodedQuery = encodeURIComponent(listQuery);
+                    // // Construct the URL
+                    // var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+                    // url.push('?sql=' + encodedQuery);
+                    // url.push('&key=AIzaSyAJ_2Gtxlr4jeFuBup_jyRa5taZGk20JLs');
+                    // url.push('&callback=?');
 
                     if (settings.removeData) {
                         $("#location-data").empty();
@@ -62,42 +63,53 @@
 
                     // Send the JSONP request using jQuery
                     $.ajax({
-                        url: url.join(''),
-                        dataType: 'jsonp',
+                        //url: url.join(''),
+                        url: 'https://tf-svc.azurewebsites.net/trails?format=json',
+                        dataType: 'json',
                         success: function(data) {
-                            var rows = data['rows'];
+                            var trails = data.Trails;
+                            //var rows = ret['rows'];
                             var resultsTableData = document.getElementById('location-data');
                             var locCoordinates = [];
-                            for (var rowNumber in rows) {
-                                var locationName = rows[rowNumber][0];
-                                var locationCoordinates = rows[rowNumber][1];
+                            for (var trail in trails) {
+
+                                var trailId = trail.Id;
+                                var locationName = trail.Name;
+                                var trailLatitude = trail.Latitude;
+                                var trailLongitude = trail.Longitude;
+                                var coords = trail.Latitude + ',' + trail.Longitude;
+
+                                //var locationName = rows[rowNumber][0];
+                                //var locationCoordinates = rows[rowNumber][1];
+                                
                                 locCoordinates.push(locationCoordinates);
                                 var dataElement = document.createElement('li');
-                                dataElement.className = "row-" + rowNumber+++" table-view-cell";
+                                dataElement.className = "row-" + trailId" table-view-cell";
                                 var nameElement = document.createElement('p');
                                 nameElement.innerHTML = locationName;
                                 nameElement.className = 'name-name';
                                 var coordinatesElement = document.createElement('p');
                                 coordinatesElement.className = 'coordinates';
-                                var nospaceCoords = locationCoordinates.replace(/ /g, '');
-                                coordinatesElement.innerHTML = locationCoordinates;
+                                //var nospaceCoords = locationCoordinates.replace(/ /g, '');
+                                coordinatesElement.innerHTML = coords;
                                 $(dataElement).append("<span class='icon icon-info trail-info-icon'></span>");
 
-
-                                //directions & favs & coords
-                                var trailInfo = document.createElement('div');
-                                trailInfo.className = 'trail-info';
-                                $(trailInfo).css('display', 'none');
-
-                                var directionsLink = "<div class='directions-link'><a class='btn btn-primary' href='http://maps.google.com/maps?saddr=" + lat + ',' + lng + "&daddr=" + nospaceCoords + "' target='_blank'><span class='fa icon-in-btn map-marker'></span>get directions</a></div>";
-                                var addFav = "<div class='add-fav'><span class='icon icon-star'></span><span class='icon icon-star-filled star-filled'></span><span class='add-fav-text'>add favorite</span></div>";
-                                var viewMap = "<a href='#'>Click to view a trail map</a>";
-                                $(trailInfo).append(coordinatesElement, directionsLink, addFav, viewMap);
-
-                                dataElement.appendChild(trailInfo);
                                 dataElement.appendChild(nameElement);
-                                //dataElement.appendChild(coordinatesElement);
                                 resultsTableData.appendChild(dataElement);
+
+                                //TODO: re-enable this code once fixed
+                                //directions & favs & coords
+                                // var trailInfo = document.createElement('div');
+                                // trailInfo.className = 'trail-info';
+                                // $(trailInfo).css('display', 'none');
+                                
+                                // var directionsLink = "<div class='directions-link'><a class='btn btn-primary' href='http://maps.google.com/maps?saddr=" + lat + ',' + lng + "&daddr=" + coords + "' target='_blank'><span class='fa icon-in-btn map-marker'></span>get directions</a></div>";
+                                // var addFav = "<div class='add-fav'><span class='icon icon-star'></span><span class='icon icon-star-filled star-filled'></span><span class='add-fav-text'>add favorite</span></div>";
+                                // var viewMap = "<a href='#'>Click to view a trail map</a>";
+                                // $(trailInfo).append(coordinatesElement, directionsLink, addFav, viewMap);
+                                //dataElement.appendChild(trailInfo);
+                                
+                                
                             }
                             distanceMatrixCoords(locCoordinates);
                         } //end success

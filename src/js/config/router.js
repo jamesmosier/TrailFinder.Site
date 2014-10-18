@@ -10,11 +10,11 @@ angular.module(_APP_).config([
 
     // Define routes here.
     $routeProvider
+      // .when('/', {
+      //   templateUrl: 'html/partials/home/index.html',
+      //   controller: 'HomeController'
+      // })
       .when('/', {
-        templateUrl: 'html/partials/home/index.html',
-        controller: 'HomeController'
-      })
-      .when('/map', {
         templateUrl: 'html/partials/map/index.html',
         controller: 'MapController',
         resolve: {

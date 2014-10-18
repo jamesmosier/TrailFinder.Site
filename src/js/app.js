@@ -35,9 +35,7 @@ angular.module(_APP_, [
 angular.module(_APP_).run([
   '$rootScope',
   function($rootScope) {
-
     // intial run code here
-
   }
 ]);
 
