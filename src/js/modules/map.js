@@ -24,17 +24,6 @@
                         lng = position.coords.longitude,
                         //lat=41.081445,lng= -81.519005,
                         pos = new google.maps.LatLng(lat, lng),
-                        //query from FusionTables for the map
-                        // map_query = {
-                        //     select: 'Coordinates',
-                        //     from: '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc',
-                        //     limit: settings.queryLimit,
-                        //     orderBy: 'ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))'
-                        // },
-                        // ftLayer = new google.maps.FusionTablesLayer({
-                        //     map: trailfinder_map,
-                        //     query: map_query
-                        // }),
                         geolocMarker = new google.maps.Marker({
                             map: trailfinder_map,
                             position: pos,
@@ -48,22 +37,13 @@
                         geolocMarker.info.open(map, geolocMarker);
                     });
                     trailfinder_map.setCenter(pos);
-                    //query for the table                                    
-                    // var listQuery = "SELECT Name, Coordinates FROM " + '1MsmdOvWLKNNrtKnmoEf2djCc3Rp_gYmueN4FGnc' + ' ORDER BY ST_DISTANCE(Coordinates, LATLNG(' + lat + ',' + lng + '))' + ' LIMIT ' + settings.queryLimit;
-                    // var encodedQuery = encodeURIComponent(listQuery);
-                    // // Construct the URL
-                    // var url = ['https://www.googleapis.com/fusiontables/v1/query'];
-                    // url.push('?sql=' + encodedQuery);
-                    // url.push('&key=AIzaSyAJ_2Gtxlr4jeFuBup_jyRa5taZGk20JLs');
-                    // url.push('&callback=?');
 
                     if (settings.removeData) {
                         $("#location-data").empty();
                     }
 
-                    // Send the JSONP request using jQuery
+                    // Send the JSON request using jQuery
                     $.ajax({
-                        //url: url.join(''),
                         url: 'https://tf-svc.azurewebsites.net/trails?format=json',
                         dataType: 'json',
                         success: function(data) {
@@ -112,11 +92,11 @@
                                 
                                 
                             });
-                            distanceMatrixCoords(locCoordinates);
+                            distanceMatrixCoords(locCoordinates, trails);
                         } //end success
                     });
 
-                    function distanceMatrixCoords(coords) {
+                    function distanceMatrixCoords(coords, trails) {
                         var origins = pos;
                         var destinations = coords;
                         var service = new google.maps.DistanceMatrixService();
@@ -154,7 +134,7 @@
                                         distanceElement[j].innerHTML = results[j].distance.text + " - " + results[j].duration.text + " away";
                                         distanceElement[j].className = 'distance-cell';
 
-                                        theRow = document.getElementsByClassName("row-" + i++);
+                                        theRow = document.getElementsByClassName("row-" + trails[j].Id);
                                         $(theRow).append(distanceElement[j]);
                                     }
                                 }
@@ -187,8 +167,8 @@
             var infowindow = new google.maps.InfoWindow(options);
             trailfinder_map.setCenter(options.position);
         }
-        google.maps.event.addDomListener(window, 'load', trailfinder_initialize());
 
+        google.maps.event.addDomListener(window, 'load', trailfinder_initialize());
 
     }
 
