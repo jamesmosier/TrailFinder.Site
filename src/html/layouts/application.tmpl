@@ -6,66 +6,68 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="img/favicon.png">
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   
-  
-<% if (env == 'development') {
-     css.forEach(function(asset) {
-       print('  <link rel="stylesheet" href="' + asset.substring(8) + '"/>\n');
-     });
-   } else if (env == 'production') {
-     print('  <link rel="stylesheet" href="css/app.css" />');
-   } %>
-
-  <script src="cordova.js"></script>
-<% if (env == 'development') {
-  print('  <script src="js/config/development.js"></script>');
-     js.forEach(function(asset){
-       print('  <script src="' + asset.substring(8) + '"></script>\n');
-     });
-   } else if (env == 'production') {
-     print('  <script src="js/application.js"></script>');
-   } %>
+  <% if (env == 'development') {
+   css.forEach(function(asset) {
+     print('  <link rel="stylesheet" href="' + asset.substring(8) + '"/>\n');
+   });
+ } else if (env == 'production') {
+   print('  <link rel="stylesheet" href="css/app.css" />');
+ } %>
 
 </head>
 <body>
 
   <header class="bar bar-nav">
-     <button class="btn btn-link btn-nav pull-left">
-        <span class="icon icon-left-nav"></span>
-        Back
-     </button>
-     <a class="icon fa location-arrow pull-right"></a>
-     <h1 class="title" ng-bind="title"></h1>
-  </header>
+   <button class="btn btn-link btn-nav pull-left">
+    <span class="icon icon-left-nav"></span>
+    Back
+  </button>
+  <a class="icon fa location-arrow pull-right"></a>
+  <h1 class="title" ng-bind="title"></h1>
+</header>
 
 
-  <div class="content" id="main" ng-view></div>
+<div class="content" id="main" ng-view></div>
 
 
-  <nav class="bar bar-tab">
-    <a class="tab-item active" href="#/home">
-      <span class="icon icon-home"></span>
-      <span class="tab-label">Home</span>
-    </a>
-    <a class="tab-item" href="#/fav">
-      <span class="icon icon-star-filled"></span>
-      <span class="tab-label">Favorites</span>
-    </a>
-    <a class="tab-item" href="#">
-      <span class="icon icon-search"></span>
-      <span class="tab-label">Search</span>
-    </a>
-    <a class="tab-item" href="#">
-      <span class="icon icon-gear"></span>
-      <span class="tab-label">Settings</span>
-    </a>
-  </nav>
+<nav class="bar bar-tab">
+  <a class="tab-item active" href="#/home">
+    <span class="icon icon-home"></span>
+    <span class="tab-label">Home</span>
+  </a>
+  <a class="tab-item" href="#/fav">
+    <span class="icon icon-star-filled"></span>
+    <span class="tab-label">Favorites</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-search"></span>
+    <span class="tab-label">Search</span>
+  </a>
+  <a class="tab-item" href="#">
+    <span class="icon icon-gear"></span>
+    <span class="tab-label">Settings</span>
+  </a>
+</nav>
 
-  <script type="text/javascript">
-    pg.initialize();
-  </script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- TODO: reenable this!! -->
+<!-- <script src="cordova.js"></script> -->
+
+<% if (env == 'development') {
+  print('  <script src="js/config/development.js"></script>');
+  js.forEach(function(asset){
+   print('  <script src="' + asset.substring(8) + '"></script>\n');
+ });
+} else if (env == 'production') {
+ print('  <script src="js/application.js"></script>');
+} %>
+
+<script type="text/javascript">
+  pg.initialize();
+</script>
 
 </body>
 </html>

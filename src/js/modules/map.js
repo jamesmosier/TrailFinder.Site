@@ -83,7 +83,7 @@
                                 //var locationName = rows[rowNumber][0];
                                 //var locationCoordinates = rows[rowNumber][1];
                                 
-                                //locCoordinates.push(locationCoordinates);
+                                locCoordinates.push(coords);
                                 var dataElement = document.createElement('li');
                                 dataElement.className = "row-" + trailId + " table-view-cell";
                                 var nameElement = document.createElement('p');
@@ -141,8 +141,6 @@
 
                                 for (var i = 0; i < origins.length; i++) {
                                     
-                                    var foo = results.Trails;
-
                                     var results = response.rows[i].elements;
 
                                     for (var j = 0; j < results.length; j++) {
@@ -158,7 +156,6 @@
 
                                         theRow = document.getElementsByClassName("row-" + i++);
                                         $(theRow).append(distanceElement[j]);
-
                                     }
                                 }
                             }
@@ -174,8 +171,8 @@
                 handleNoGeolocation(false);
             }
         }
+        
         //error handling for geolocation
-
         function handleNoGeolocation(errorFlag) {
             if (errorFlag) {
                 var content = 'Error: The Geolocation service failed.';
