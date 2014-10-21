@@ -149,6 +149,7 @@
             } else {
                 // Browser doesn't support Geolocation
                 handleNoGeolocation(false);
+                alert('Your device does not support geolocation. Please enable it for this app.');
             }
         }
         
