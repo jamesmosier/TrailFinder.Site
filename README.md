@@ -1,59 +1,19 @@
 #TrailFinder.Site
 
+# Quick Start (after initial setup)
+
+Typical development follows this... 
+
+`grunt dev` when in root folder & once ready to emulate, run `cordova run ios`
+
+
+Other important notes for emulation:
+
+cd to app & run: `cordova prepare` then `cordova emulate ios`
+
 <hr>
 
 Original: https://github.com/calvinl/ng-phonegap
-
-# Angular PhoneGap
-
-An opinionated workflow for building kick-ass mobile apps using
- Cordova and AngularJS. This README is biased toward iOS apps
- on Cordova, but it will aim to be platform-agnostic in the
- future.
-
-## Getting Started
-
-### Requirements
-
-To use this tool, you'll need the following installed:
-`npm`, `grunt`, `cordova` (3.5.0 at this time of this writing).
-Follow the instructions below. You'll also need either `ios-deploy`
-or XCode, depending on whether you want to build, test and debug
-your app with XCode or not.
-
-### Install the Grunt CLI
-
-Install the [grunt](http://gruntjs.com) command line interface:
-
-    npm install -g grunt-cli
-
-### Install Bower
-
-Bower is a package manager like NPM, mostly used for front-end
-components (like jQuery).
-
-    npm install -g bower
-
-### Install ios-sim
-
-If you don't want to use XCode, you can use
-[`ios-sim`](https://github.com/phonegap/ios-sim) to install
-and debug iPhone apps without using XCode.
-
-    npm install -g ios-sim
-
-### Install the Cordova CLI
-
-    npm install -g cordova
-
-Then, navigate to this repo's root directory, and generate a
-new cordova project in your `app/` folder:
-
-    cordova create app <bundle_id> <app_name>
-
-For example:
-
-    cordova create app com.example.hello HelloWorld
 
 This will add relevant files into your `app/` directory:
 
@@ -150,33 +110,6 @@ production. It will also use the the file in
 up things like API routes and/or public keys that differ
 per-environment.
 
-
-### Running unit- and e2e tests
-
-First, you'll need to install the karma CLI if you haven't already:
-
-    npm install -g karma-cli
-
-If you wish to a browser other than Firefox to run your tests, just replace
-karma-chrome-launcher in `package.json` with your preferred launcher. You
-need to change the settings in `/test/karma-*.conf.js` files accordingly.
-
-#### Unit Tests
-
-The following command will run all tests found in the `/test/unit` folder:
-
-    test\test.bat // for Windows
-    test/test.sh  // for Linux/Mac OS
-
-#### End-to-end (e2e) Tests
-
-To run all end to end tests in the `/test/e2e` folder, run:
-
-    grunt dev         // if not already started
-    test\e2e-test.bat // for Windows
-    test/e2e-test.sh  // for Linux/Mac OS
-
-
 ### Directory Structure
 
 The `src/` directory is your main AngularJS project folder. It consists
@@ -212,36 +145,6 @@ of several directories and initial files of interest:
       | |- pg.js                <-- PhoneGap initialization class.
 
 
-### bower.json
-
-The `bower.json` contains all the components that your app requires.
-You can add more components by installing via Bower.
-
-    bower search <packagename>
-
-Will run a search for packages. Use `bower install --save`
-
-    bower install <packagename> --save
-
-The `--save` option adds the components into your bower.json file.
-This will also install the package into the `vendor/` directory as
-specified in `.bowerrc`. You can change that directory, but you'll
-also need to change it in `Gruntfile.js`, specified below, and add
-the directory to `.gitignore`.
-
-Keeping a bower.json is useful so you can keep package source files
-out of version control, and have developers install them via Bower
-after downloading your repository.
-
-
-### Gruntfile.js
-
-`Gruntfile.js` is where the magic happens. You will need to add
-any Bower components you want into the `assets.css` and `assets.js`
-properties. Angular, Bootstrap 3, and Font-Awesome are already
-added for you.
-
-
 ## Some Conventions to Keep in Mind
 
 There are certain conventions to keep in mind. When creating a
@@ -258,36 +161,3 @@ top-level app module (in `src/js/app.js`).
 
 Do the same for `_DIRECTIVES_`, `_SERVICES_`, and so on.
 
-
-# Other Notes
-
-## ngmin 
-
-Due to AngularJS's dependency injection (DI), minifying files for
-production messes things up since Angular uses argument names to look
-up module/service/etc names. To solve this we can pass an array to our
-angular modules with the string names of the dependencies. This is
-annoying to continually do, so we use `grunt-ngmin` automatically
-generate this, so you can use normal arguments in your modules.
-
-
-## Vim Notes
-
-If you're using Vim with `ctrlp`, you can add the following line to your
-`~/.vimrc` file to exclude the `build/`, `tmp/`, and `release/` folders
-from the search directories.
-
-    set wildignore+=/path/to/repo/tmp/*,/path/to/repo/build/*,/path/to/repo/release/*
-
-
-
-# Version History
-
-Version  | Date       | Description
--------- | ---------- | ------------
-`1.2.0`  | `06-04-14` | Working unit and e2e tests. Thanks [mikkoviitala](https://github.com/mikkoviitala). Update Angular to 1.2.16, karma, grunt, bower, Fontawesome.
-`1.1.1`  | `01-14-14` | Update angular to 1.2.8, readme changes.
-`1.1.0`  | `12-22-13` | Use Cordova instead of PG CLI, upgrade to 3.3.0, update documentation, and manage some breaking changes to directory structure.
-`1.0.2`  | `08-30-13` | Hotfixes.
-`1.0.1`  | `08-30-13` | Re-release as a simple workflow instead of npm module.
-`1.0.0`  | `07-30-13` | Initial version.
